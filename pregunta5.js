@@ -1,12 +1,13 @@
 /**
- * En el siguiente array de objetos (beers) se requiere actualizar el repositorio donde se encuentra almacenadas
- * los archivos de las etiquetas (label). Dicha actualizacion debe mantener la carpeta.
+ * En el siguiente array de objetos (beers) se requiere actualizar el repositorio donde se encuentra
+ * almacenadas los archivos de las etiquetas (label). Dicha actualizacion debe mantener la carpeta.
  * 
- * El nuevo repositorio se encuentra en SharePoint Online, en un sitio de Tecnoshare, por tanto la url de la etiqueta quedará de la siguiente forma:
+ * El nuevo repositorio se encuentra en SharePoint Online, en un sitio de Tecnoshare, 
+ * por tanto la url de la etiqueta quedará de la siguiente forma:
  * https://tecnoshare.sharepoint.com/sites/beer/[carpeta]/[nombre_archivo]
  * 
- * Ademas se requiere que el nombre del archivo sea reemplazado por el nombre de la cerveza por ejemplo para Darkness sera:
- * https://tecnoshare.sharepoint.com/sites/beer/lnxbIV/darkness.png
+ * Ademas se requiere que el nombre del archivo sea reemplazado por el nombre de la cerveza
+ * por ejemplo para Darkness sera: https://tecnoshare.sharepoint.com/sites/beer/lnxbIV/darkness.png
  * 
  
  /*
@@ -20,3 +21,19 @@ const beers = [
     { name: 'Stolen Fruit', abv: 4.6, label: 'https://s3.amazonaws.com/brewerydbapi/beer/YGT30k/upload_uVCHP7-large.png', type: 'Wheat' },
 ];
 
+function cambiarEtiqueta(beers){
+  return beers.map(beer=>(
+    {...beer,label: setNuevoLabel(beer)}
+  ))
+}
+
+function setNuevoLabel(beer){
+  var nuevaLabel = 'https://tecnoshare.sharepoint.com/sites/beer/'
+  var urlSplited = beer.label.split('/')
+  var nombreArchivo = urlSplited.pop()
+  var nombreCarpeta = urlSplited.pop() 
+  var nombreExtension = nombreArchivo.split('.').pop()
+  return nuevaLabel+nombreCarpeta+'/'+beer.name+'.'+nombreExtension
+}
+
+console.log(cambiarEtiqueta(beers))

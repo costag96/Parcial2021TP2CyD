@@ -3,7 +3,12 @@
 // si la longitud del array es < 3 se debe retornar undefined
 
 const greater3 = nums => {
-    
+    if(nums.length < 3) return undefined
+    else{
+        let arraySinRepetidos = [...new Set(nums)]
+        arraySinRepetidos.sort((n1,n2)=> n2-n1)
+        return arraySinRepetidos[2]
+    }
 }
 
 
